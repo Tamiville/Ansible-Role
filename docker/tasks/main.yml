@@ -1,0 +1,33 @@
+---
+# tasks file for docker
+- name: update package
+  apt: update_cache=yes state=latest
+
+- name: apt-get install these list
+  apt: name={{ item }} state=latest
+  loop: 
+    - ca-certificates
+    - curl
+    - gnupg 
+    - lsb-release
+
+- name: Add Docker’s official GPG key
+  apt_key:
+    url: "{{ docker_key}}"
+    state: present
+
+- name:  command to set up the repository
+  apt_repository: 
+    repo: "{{ docker_repository}}"
+    state: present
+
+- name: update package
+  apt: update_cache=yes state=latest
+
+- name: apt-get install these list
+  apt: name={{ item }} state=latest
+  loop: 
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io 
+    - docker-compose-plugin

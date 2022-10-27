@@ -1,0 +1,6 @@
+---
+admin_group: apache
+apache_user: apache
+scr_file_path: /mnt/c/Users/apple/Documents/GithubDev/Ansible-Role/apach/index.html
+dest_file_path: /var/www/html/
+path: /var/www/html/

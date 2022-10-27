@@ -1,0 +1,3 @@
+ansible-playbook main.yml -i inventory.yml --user adminuser --private-key /home/devopslab/.ssh/ansiblekey3 -vvv
+
+ansible-playbook main.yml -i inventory.yml --user adminuser --private-key /home/devopslab/.ssh/ansiblekey3 --ask-vault-pass -vvv

@@ -1,0 +1,43 @@
+---
+- hosts: dev
+  become: yes
+  vars_files:
+    - vars/vars.yml
+  
+  tasks:
+    - name: update package
+      apt:  update_cache=yes state=latest
+
+    - name: create apache group
+      group:
+        name: "{{ admin_group }}"
+        state: present
+
+    - name: create apache user
+      user:
+        name: "{{ apache_user }}"
+        shell: /bin/bash
+        groups: "{{ admin_group }}"
+        append: yes
+
+    - name: change ownership of user
+      file:
+        path: "{{ path }}"
+        state: directory
+        owner: "{{ apache_user }}"
+        group: "{{ admin_group }}"
+        mode: '0755'
+
+    - name: install apache2
+      apt:  name=apache2 state=latest
+   
+    - name: copy index.html file
+      copy:
+        src="{{ scr_file_path }}"
+        dest="{{ dest_file_path }}"
+
+  handlers:
+    - name: start apache
+      service: 
+        name: apache2 
+        state: restarted

@@ -1,0 +1,12 @@
+---
+# tasks file for nginx
+  - name: update package
+    apt:  update_cache=yes state=latest
+    
+  - name: install "{{ install_name }}"
+    apt:  name="{{ app_name }}" state=latest
+
+  - name: copy index.html file
+    copy:
+      src="{{ scr_file_path }}"
+      dest="{{ dest_file_path }}"
